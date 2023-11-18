@@ -10,14 +10,28 @@ public static class HostApplicationBuilderExtensions
   /// Uses Autofac to register dependencies of SomeLib and of whatever application
   /// is calling this
   /// </summary>
-  /// <param name="hostAppBuilder">The host application builder instance</param>
+  /// <param name="hostBuilder">The host application builder instance</param>
   /// <param name="typesToIgnore">Any types that should not be registered by Autofac</param>
-  public static HostApplicationBuilder RegisterDependencies(this HostApplicationBuilder hostAppBuilder, params Type[] typesToIgnore)
+  public static HostApplicationBuilder RegisterDependencies(this HostApplicationBuilder hostBuilder, params Type[] typesToIgnore)
   {
-    hostAppBuilder.ConfigureContainer<ContainerBuilder>(
-      new AutofacServiceProviderFactory(),
-      containerBuilder => containerBuilder.RegisterModule(new SomeLibAutofacModule(typesToIgnore))
-    );
-    return hostAppBuilder;
+    hostBuilder.ConfigureContainer(new AutofacServiceProviderFactory(), ContainerConfiguration(typesToIgnore));
+    return hostBuilder;
   }
+
+  /// <summary>
+  /// Uses Autofac to register dependencies of SomeLib and of whatever application
+  /// is calling this
+  /// </summary>
+  /// <remarks>This variant is for .NET 7 which uses <see cref="IHostBuilder"/> out of the box</remarks>
+  /// <param name="hostBuilder">The host application builder instance</param>
+  /// <param name="typesToIgnore">Any types that should not be registered by Autofac</param>
+  public static IHostBuilder RegisterDependencies(this IHostBuilder hostBuilder, params Type[] typesToIgnore)
+  {
+    return hostBuilder
+      .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+      .ConfigureContainer(ContainerConfiguration(typesToIgnore));
+  }
+
+  private static Action<ContainerBuilder> ContainerConfiguration(Type[] typesToIgnore) =>
+    containerBuilder => containerBuilder.RegisterModule(new SomeLibAutofacModule(typesToIgnore));
 }
