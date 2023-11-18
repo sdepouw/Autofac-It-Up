@@ -9,7 +9,10 @@ namespace AutofacItUp.SomeLib;
 /// <summary>
 /// Registers dependencies inside this class library, as well as those of the Worker
 /// </summary>
-public class SomeLibAutofacModule(params Type[] typesToIgnore) : AutofacModule
+/// <param name="concreteTypesToIgnore">
+/// Types for Autofac to ignore; pass the implementation type, not the interface type
+/// </param>
+public class SomeLibAutofacModule(params Type[] concreteTypesToIgnore) : AutofacModule
 {
   protected override void Load(ContainerBuilder builder)
   {
@@ -21,7 +24,7 @@ public class SomeLibAutofacModule(params Type[] typesToIgnore) : AutofacModule
     Assembly thisAssembly = GetType().Assembly;
     Assembly workerAssembly = Assembly.GetEntryAssembly()!; // Confirmed working for EXE and when running as a Service
     builder.RegisterAssemblyTypes(thisAssembly, workerAssembly)
-      .Where(t => !typesToIgnore.Contains(t))
+      .Where(t => !concreteTypesToIgnore.Contains(t))
       .Where(t => !t.FullName?.StartsWith("Refit.Implementation") ?? false)
       .Where(t => !t.GetInterfaces().Any(i => interfacesToExclude.Contains(i)))
       .AsImplementedInterfaces(); // Automatic registration of IFoo -> Foo etc.
