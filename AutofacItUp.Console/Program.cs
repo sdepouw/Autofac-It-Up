@@ -9,7 +9,9 @@ builder.Services.AddSerilog(config => config.ReadFrom.Configuration(builder.Conf
 builder.Services.AddWindowsService();
 builder.Services.AddHostedService<Worker>();
 builder.Services.AddRefitClient<ICatFactsClient>().ConfigureHttpClient(CatFactsConfig);
-var host = builder.Build();
+
+IHost host = builder.Build();
+host.ValidateSerilog();
 host.Run();
 
 // .NET 7 Example
