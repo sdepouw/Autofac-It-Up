@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutofacItUp.Console", "Auto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutofacItUp.SomeLib", "AutofacItUp.SomeLib\AutofacItUp.SomeLib.csproj", "{62DE514B-F5D1-41A6-97F0-02DEDD2447D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutofacItUp.SomeLib.Tests", "AutofacItUp.SomeLib.Tests\AutofacItUp.SomeLib.Tests.csproj", "{46A272AF-7A75-439A-A98B-6E32E4026EAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{62DE514B-F5D1-41A6-97F0-02DEDD2447D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62DE514B-F5D1-41A6-97F0-02DEDD2447D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62DE514B-F5D1-41A6-97F0-02DEDD2447D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46A272AF-7A75-439A-A98B-6E32E4026EAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46A272AF-7A75-439A-A98B-6E32E4026EAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46A272AF-7A75-439A-A98B-6E32E4026EAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46A272AF-7A75-439A-A98B-6E32E4026EAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
