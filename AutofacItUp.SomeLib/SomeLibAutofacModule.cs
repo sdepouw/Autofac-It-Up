@@ -19,10 +19,11 @@ public class SomeLibAutofacModule(params Type[] typesToIgnore) : AutofacModule
       typeof(IModule) // Autofac Modules
     };
     Assembly thisAssembly = GetType().Assembly;
-    Assembly workerAssembly = Assembly.GetEntryAssembly()!; // Worker's Assembly, confirmed working for EXE and when running as a Service
+    Assembly workerAssembly = Assembly.GetEntryAssembly()!; // Confirmed working for EXE and when running as a Service
     builder.RegisterAssemblyTypes(thisAssembly, workerAssembly)
-      .Where(t => !t.GetInterfaces().Any(i => interfacesToExclude.Contains(i)))
       .Where(t => !typesToIgnore.Contains(t))
+      .Where(t => !t.FullName?.StartsWith("Refit.Implementation") ?? false)
+      .Where(t => !t.GetInterfaces().Any(i => interfacesToExclude.Contains(i)))
       .AsImplementedInterfaces(); // Automatic registration of IFoo -> Foo etc.
 
     // Singleton registration + registering .NET 8's TimeProvider
@@ -30,5 +31,9 @@ public class SomeLibAutofacModule(params Type[] typesToIgnore) : AutofacModule
       .RegisterInstance(TimeProvider.System)
       .As<TimeProvider>()
       .SingleInstance();
+
+    // Uncomment and debug to view all the things Autofac will do
+    // Application will not start if left uncommented
+    // var registeredComponents = builder.Build().ComponentRegistry.Registrations;
   }
 }
