@@ -8,8 +8,7 @@ builder.RegisterDependencies();
 builder.Services.AddSerilog(config => config.ReadFrom.Configuration(builder.Configuration));
 builder.Services.AddWindowsService();
 builder.Services.AddHostedService<Worker>();
-builder.Services.AddRefitClient<ICatFactsClient>()
-  .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://cat-fact.herokuapp.com"));
+builder.Services.AddRefitClient<ICatFactsClient>().ConfigureHttpClient(CatFactsConfig);
 var host = builder.Build();
 host.Run();
 
@@ -21,6 +20,13 @@ host.Run();
 //     services.AddSerilog(config => config.ReadFrom.Configuration(hostBuilderContext.Configuration));
 //     services.AddWindowsService();
 //     services.AddHostedService<Worker>();
+//     services.AddRefitClient<ICatFactsClient>().ConfigureHttpClient(CatFactsConfig);
 // });
 // var otherHost = builder.Build();
 // otherHost.Run();
+
+void CatFactsConfig(HttpClient c)
+{
+    c.BaseAddress = new Uri("https://cat-fact.herokuapp.com");
+    c.Timeout = TimeSpan.FromSeconds(3);
+}
