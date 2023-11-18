@@ -17,10 +17,10 @@ host.Run();
 // builder.RegisterDependencies();
 // builder.ConfigureServices((hostBuilderContext, services) =>
 // {
-//     services.AddSerilog(config => config.ReadFrom.Configuration(hostBuilderContext.Configuration));
-//     services.AddWindowsService();
-//     services.AddHostedService<Worker>();
-//     services.AddRefitClient<ICatFactsClient>().ConfigureHttpClient(CatFactsConfig);
+//   services.AddSerilog(config => config.ReadFrom.Configuration(hostBuilderContext.Configuration));
+//   services.AddWindowsService();
+//   services.AddHostedService<Worker>();
+//   services.AddRefitClient<ICatFactsClient>().ConfigureHttpClient(CatFactsConfig);
 // });
 // var otherHost = builder.Build();
 // otherHost.Run();
